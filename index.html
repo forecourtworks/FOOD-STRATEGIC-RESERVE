@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Family Strategic Reserve</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0D478C">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">SR</div>
+        <div>
+          <h1>Strategic Reserve</h1>
+          <p class="subtitle">Family of 6 • Nairobi</p>
+        </div>
+      </div>
+      <button id="btn-settings" class="btn-icon" title="Settings">⚙️</button>
+    </header>
+
+    <section class="summary" id="summary-cards"></section>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="dashboard">Dashboard</button>
+      <button class="tab" data-tab="incoming">Incoming</button>
+      <button class="tab" data-tab="withdraw">Withdraw</button>
+      <button class="tab" data-tab="history">History</button>
+    </nav>
+
+    <main>
+      <section id="tab-dashboard" class="tab-content active">
+        <div class="section-header">
+          <h2>Stock Levels</h2>
+          <button id="btn-refresh" class="btn-secondary">Refresh</button>
+        </div>
+        <div id="stock-list" class="stock-list"></div>
+      </section>
+
+      <section id="tab-incoming" class="tab-content">
+        <div class="section-header"><h2>Record Incoming Stock</h2></div>
+        <form id="form-incoming" class="form-card">
+          <div class="form-group">
+            <label>Item</label>
+            <select id="in-item" required></select>
+          </div>
+          <div class="form-group">
+            <label>Quantity / Weight</label>
+            <div class="input-with-unit">
+              <input type="number" id="in-qty" step="0.1" min="0.1" required placeholder="e.g. 25">
+              <span id="in-unit">kg</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Date Received</label>
+            <input type="date" id="in-date" required>
+          </div>
+          <div class="form-group">
+            <label>Notes (optional)</label>
+            <input type="text" id="in-notes" placeholder="e.g. From Githurai market">
+          </div>
+          <button type="submit" class="btn-primary">Add to Reserve</button>
+        </form>
+      </section>
+
+      <section id="tab-withdraw" class="tab-content">
+        <div class="section-header"><h2>Record Withdrawal</h2></div>
+        <form id="form-withdraw" class="form-card">
+          <div class="form-group">
+            <label>Item</label>
+            <select id="out-item" required></select>
+          </div>
+          <div class="form-group">
+            <label>Quantity Withdrawn</label>
+            <div class="input-with-unit">
+              <input type="number" id="out-qty" step="0.1" min="0.1" required placeholder="e.g. 5">
+              <span id="out-unit">kg</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Date of Withdrawal</label>
+            <input type="date" id="out-date" required>
+          </div>
+          <div class="form-group">
+            <label>Notes (optional)</label>
+            <input type="text" id="out-notes" placeholder="e.g. Taken for milling">
+          </div>
+          <button type="submit" class="btn-primary btn-danger">Record Withdrawal</button>
+        </form>
+      </section>
+
+      <section id="tab-history" class="tab-content">
+        <div class="section-header">
+          <h2>Transaction History</h2>
+          <select id="history-filter"><option value="all">All Items</option></select>
+        </div>
+        <div id="history-list" class="history-list"></div>
+      </section>
+    </main>
+
+    <div id="modal-settings" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Settings & Targets</h2>
+          <button id="btn-close-settings" class="btn-icon">✕</button>
+        </div>
+        <div class="modal-body">
+          <h3>3-Month Critical Targets</h3>
+          <p class="hint">These numbers drive the colour alerts and progress bars.</p>
+          <div id="targets-editor"></div>
+
+          <h3 style="margin-top:1.5rem;">WhatsApp Alerts</h3>
+          <p class="hint">Infrastructure ready. Enter API details when available. Sending is currently disabled — alerts are only logged and shown in the app.</p>
+          <div class="form-group">
+            <label>WhatsApp API Token</label>
+            <input type="password" id="wa-api-key" placeholder="Paste token later">
+          </div>
+          <div class="form-group">
+            <label>Recipient Phone (254...)</label>
+            <input type="text" id="wa-phone" placeholder="2547XXXXXXXX">
+          </div>
+          <div class="form-group">
+            <label>Enable sending when API ready</label>
+            <label class="switch">
+              <input type="checkbox" id="wa-enabled">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <button id="btn-save-settings" class="btn-primary">Save Settings</button>
+          <button id="btn-test-alert" class="btn-secondary" style="margin-top:0.5rem;">Simulate Alert (log only)</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
